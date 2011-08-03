@@ -10,9 +10,20 @@
     <packaging>jar</packaging>
 
     <name>Gravatar4Java</name>
+    <url>https://github.com/bripkens/Gravatar4Java</url>
     <description>
         A small library for the generation of Gravatar URLs.
     </description>
+
+    <scm>
+        <connection>
+            scm:git:git@github.com:bripkens/Gravatar4Java.git
+        </connection>
+        <url>scm:git:git@github.com:bripkens/Gravatar4Java.git</url>
+        <developerConnection>
+            scm:git:git@github.com:bripkens/Gravatar4Java.git
+        </developerConnection>
+    </scm>
 
     <licenses>
         <license>
