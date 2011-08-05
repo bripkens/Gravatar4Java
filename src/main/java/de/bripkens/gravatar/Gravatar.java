@@ -75,6 +75,16 @@ public class Gravatar {
     }
 
     /**
+     * Retrieve the current setting for the desired size
+     *
+     * @return the size in pixel
+     * @see Gravatar#setSize(int)
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**
      * Retrieve an avatar URL which allows retrieval over HTTPS.
      *
      * @param https Set to true to retrieve a HTTPS URL.
@@ -87,6 +97,15 @@ public class Gravatar {
     }
 
     /**
+     * Check whether the avatar is to be retrieved over HTTPS
+     *
+     * @return true when the avatar should be retrieved over HTTPS
+     */
+    public boolean isHttps() {
+        return https;
+    }
+
+    /**
      * Enforce usage of the default image by passing true.
      *
      * @param forceDefault True to always retrieve the default image.
@@ -95,6 +114,15 @@ public class Gravatar {
     public Gravatar setForceDefault(boolean forceDefault) {
         this.forceDefault = forceDefault;
         return this;
+    }
+
+    /**
+     * Check whether the default avatar is enforced.
+     *
+     * @return true when it's enforced
+     */
+    public boolean isForceDefault() {
+        return forceDefault;
     }
 
     /**
@@ -112,6 +140,16 @@ public class Gravatar {
     }
 
     /**
+     * Retrieve information about the allowed avatar rating
+     *
+     * @return avatar rating
+     * @see Gravatar#setRating(Rating)
+     */
+    public Rating getRating() {
+        return rating;
+    }
+
+    /**
      * Set the default image which will be retrieved when there is no avatar
      * for the given email, when the avatar can't be shown due to the rating
      * or when you enforce the default avatar.
@@ -125,6 +163,16 @@ public class Gravatar {
         this.standardDefaultImage = standardDefaultImage;
         customDefaultImage = null;
         return this;
+    }
+
+    /**
+     * Retrieve the standard default image setting
+     *
+     * @return Currently set standard default image
+     * @see Gravatar#setStandardDefaultImage(DefaultImage)
+     */
+    public DefaultImage getStandardDefaultImage() {
+        return standardDefaultImage;
     }
 
     /**
@@ -161,6 +209,17 @@ public class Gravatar {
 
         standardDefaultImage = null;
         return this;
+    }
+
+    /**
+     * Retrieve the custom default image. Please note that this URL is already
+     * URL encoded.
+     *
+     * @return The custom default image
+     * @see Gravatar#setCustomDefaultImage(String, String)
+     */
+    public String getCustomDefaultImage() {
+        return customDefaultImage;
     }
 
     /**
