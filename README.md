@@ -4,6 +4,7 @@ A small library for the generation of Gravatar URLs.
 
 ## Usage
 Gravatar4Java is a Maven project and available in Maven Central. Just add the Gravatar4Java dependency to your pom.xml and you are done!
+
     <dependency>
         <groupId>de.bripkens</groupId> 
         <artifactId>gravatar4java</artifactId> 
