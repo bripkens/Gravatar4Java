@@ -8,7 +8,7 @@ Gravatar4Java is a Maven project and available in Maven Central. Just add the Gr
     <dependency>
         <groupId>de.bripkens</groupId> 
         <artifactId>gravatar4java</artifactId> 
-        <version>1.0</version> 
+        <version>1.1</version> 
     </dependency>
 
 
@@ -23,3 +23,19 @@ Gravatar4Java is a Maven project and available in Maven Central. Just add the Gr
         .setRating(Rating.PARENTAL_GUIDANCE_SUGGESTED)
         .setStandardDefaultImage(DefaultImage.MONSTER)
         .getUrl("foobar@example.com");
+
+
+## Spring example
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:p="http://www.springframework.org/schema/p">
+     
+        <!-- Gravatar -->
+        <bean id="gravatar"
+              class="de.bripkens.gravatar.Gravatar"
+              p:size="75"
+              p:rating="GENERAL_AUDIENCE"
+              p:standardDefaultImage="MONSTER" />
+     
+    </beans>
