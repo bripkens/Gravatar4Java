@@ -17,6 +17,7 @@
 package de.bripkens.gravatar;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -24,12 +25,11 @@ import java.net.URLEncoder;
  * A utility class for the generation of Gravatar URLs. This class
  * supports various settings, e.g. default image, custom default image and
  * avatar ratings that are meant to simplify the URL generation process.
- *
+ * <br />
  * A Gravatar instance can be used multiple times and the getUrl(...) method
  * is thread safe.
- *
+ * <br />
  * Example:
- *
  * <pre>
  * {@code
  * String gravatarImageURL = new Gravatar()
@@ -44,35 +44,17 @@ import java.net.URLEncoder;
  * @author Ben Ripkens <bripkens.dev@gmail.com>
  */
 public class Gravatar {
-    public static final String URL =
-            "http://www.gravatar.com/avatar/";
-    public static final String HTTPS_URL =
-            "https://secure.gravatar.com/avatar/";
+    public static final String URL = "http://www.gravatar.com/avatar/";
+    public static final String HTTPS_URL = "https://secure.gravatar.com/avatar/";
     public static final String FILE_TYPE_EXTENSION = ".jpg";
     public static final int DEFAULT_SIZE = 80;
     public static final Rating DEFAULT_RATING = Rating.GENERAL_AUDIENCE;
-
     private int size = DEFAULT_SIZE;
     private boolean https;
     private boolean forceDefault;
     private Rating rating = DEFAULT_RATING;
     private DefaultImage standardDefaultImage;
     private String customDefaultImage;
-
-    /**
-     * Set the desired size through the size property. All avatars have a
-     * quadratic form, thus only one value is required. The size is expected
-     * in pixel
-     *
-     * @param size The avatar size in pixel.
-     * @return Fluent interface
-     */
-    public Gravatar setSize(int size) {
-        assert size > 0 && size < 513;
-
-        this.size = size;
-        return this;
-    }
 
     /**
      * Retrieve the current setting for the desired size
@@ -85,14 +67,17 @@ public class Gravatar {
     }
 
     /**
-     * Retrieve an avatar URL which allows retrieval over HTTPS.
+     * Set the desired size through the size property. All avatars have a
+     * quadratic form, thus only one value is required. The size is expected
+     * in pixel
      *
-     * @param https Set to true to retrieve a HTTPS URL.
+     * @param size The avatar size in pixel.
      * @return Fluent interface
      */
-    public Gravatar setHttps(boolean https) {
-        this.https = https;
+    public Gravatar setSize(int size) {
+        assert size > 0 && size < 2049;
 
+        this.size = size;
         return this;
     }
 
@@ -103,6 +88,26 @@ public class Gravatar {
      */
     public boolean isHttps() {
         return https;
+    }
+
+    /**
+     * Retrieve an avatar URL which allows retrieval over HTTPS.
+     *
+     * @param https Set to true to retrieve a HTTPS URL.
+     * @return Fluent interface
+     */
+    public Gravatar setHttps(boolean https) {
+        this.https = https;
+        return this;
+    }
+
+    /**
+     * Check whether the default avatar is enforced.
+     *
+     * @return true when it's enforced
+     */
+    public boolean isForceDefault() {
+        return forceDefault;
     }
 
     /**
@@ -117,12 +122,13 @@ public class Gravatar {
     }
 
     /**
-     * Check whether the default avatar is enforced.
+     * Retrieve information about the allowed avatar rating
      *
-     * @return true when it's enforced
+     * @return avatar rating
+     * @see Gravatar#setRating(Rating)
      */
-    public boolean isForceDefault() {
-        return forceDefault;
+    public Rating getRating() {
+        return rating;
     }
 
     /**
@@ -140,13 +146,13 @@ public class Gravatar {
     }
 
     /**
-     * Retrieve information about the allowed avatar rating
+     * Retrieve the standard default image setting
      *
-     * @return avatar rating
-     * @see Gravatar#setRating(Rating)
+     * @return Currently set standard default image
+     * @see Gravatar#setStandardDefaultImage(DefaultImage)
      */
-    public Rating getRating() {
-        return rating;
+    public DefaultImage getStandardDefaultImage() {
+        return standardDefaultImage;
     }
 
     /**
@@ -166,36 +172,12 @@ public class Gravatar {
     }
 
     /**
-     * Retrieve the standard default image setting
-     *
-     * @return Currently set standard default image
-     * @see Gravatar#setStandardDefaultImage(DefaultImage)
-     */
-    public DefaultImage getStandardDefaultImage() {
-        return standardDefaultImage;
-    }
-
-    /**
-     * Set the default image which will be retrieved when there is no avatar
-     * for the given email, when the avatar can't be shown due to the rating
-     * or when you enforce the default avatar.
-     *
-     * @param customDefaultImage Absolute URL to an image. An UTF-8 encoding
-     *   is expected.
-     * @return Fluent interface
-     */
-    public Gravatar setCustomDefaultImage(String customDefaultImage)
-            throws UnsupportedEncodingException {
-        return setCustomDefaultImage(customDefaultImage, "UTF-8");
-    }
-
-    /**
      * Set the default image which will be retrieved when there is no avatar
      * for the given email, when the avatar can't be shown due to the rating
      * or when you enforce the default avatar.
      *
      * @param customDefaultImage Absolute URL to an image.
-     * @param encoding customDefaultImage's (first parameter) encoding
+     * @param encoding           customDefaultImage's (first parameter) encoding
      * @return Fluent interface
      * @see java.net.URLEncoder#encode(String, String)
      */
@@ -203,7 +185,7 @@ public class Gravatar {
                                           String encoding)
             throws UnsupportedEncodingException {
         assert customDefaultImage != null && encoding != null;
-        
+
         this.customDefaultImage = URLEncoder.encode(customDefaultImage,
                 encoding);
 
@@ -223,8 +205,22 @@ public class Gravatar {
     }
 
     /**
+     * Set the default image which will be retrieved when there is no avatar
+     * for the given email, when the avatar can't be shown due to the rating
+     * or when you enforce the default avatar.
+     *
+     * @param customDefaultImage Absolute URL to an image. An UTF-8 encoding
+     *                           is expected.
+     * @return Fluent interface
+     */
+    public Gravatar setCustomDefaultImage(String customDefaultImage)
+            throws UnsupportedEncodingException {
+        return setCustomDefaultImage(customDefaultImage, "UTF-8");
+    }
+
+    /**
      * Retrieve the gravatar URL for the given email.
-     * 
+     *
      * @param email The email for which the avatar URL should be returned.
      * @return URL to the gravatar.
      */
@@ -235,36 +231,42 @@ public class Gravatar {
 
         String emailHash = DigestUtils.md5Hex(email.trim().toLowerCase());
 
+        boolean firstParameter = true;
         // StringBuilder standard capacity is 16 characters while the minimum
-        // url is 76 characters long.
-        StringBuilder builder = new StringBuilder(85)
+        // url is 63 characters long. The maximum length without customDefaultImage
+        // is 91.
+        StringBuilder builder = new StringBuilder(91)
                 .append(https ? HTTPS_URL : URL)
                 .append(emailHash)
-                .append(FILE_TYPE_EXTENSION)
-                .append("?");
+                .append(FILE_TYPE_EXTENSION);
 
         if (size != DEFAULT_SIZE) {
-            addParameter(builder, "s", Integer.toString(size));
+            addParameter(builder, "s", Integer.toString(size), firstParameter);
+            firstParameter = false;
         }
         if (forceDefault) {
-            builder.append("f=y&");
+            addParameter(builder, "f", "y", firstParameter);
+            firstParameter = false;
         }
         if (rating != DEFAULT_RATING) {
-            addParameter(builder, "r", rating.getKey());
+            addParameter(builder, "r", rating.getKey(), firstParameter);
+            firstParameter = false;
         }
         if (customDefaultImage != null) {
-            addParameter(builder, "d", customDefaultImage);
+            addParameter(builder, "d", customDefaultImage, firstParameter);
         } else if (standardDefaultImage != null) {
-            addParameter(builder, "d", standardDefaultImage.getKey());
+            addParameter(builder, "d", standardDefaultImage.getKey(), firstParameter);
         }
 
         return builder.toString();
     }
 
-    private void addParameter(StringBuilder builder, String key, String value) {
-        builder.append(key)
-                .append("=")
-                .append(value)
-                .append("&");
+    private void addParameter(StringBuilder builder, String key, String value, Boolean firstParameter) {
+        if (firstParameter) {
+            builder.append("?");
+        } else {
+            builder.append("&");
+        }
+        builder.append(key).append("=").append(value);
     }
 }

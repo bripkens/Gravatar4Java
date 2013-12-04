@@ -19,13 +19,13 @@ package de.bripkens.gravatar;
 /**
  * Through ratings the retrieved avatars can be reduced to the ones
  * appropriate for the targeted audience.
- *
+ * <br />
  * These ratings are based on the
  * <i>Motion Picture Association of America film rating system</i>. For more
  * information read the
  * <a href="http://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system">
  * Wikipedia article</a>.
- *
+ * <br />
  * The rating descriptions are taken from the Gravatar website.
  *
  * @author Ben Ripkens <bripkens.dev@gmail.com>
@@ -33,29 +33,29 @@ package de.bripkens.gravatar;
 public enum Rating {
     /**
      * Allow images for:
-     * Suitable for display on all websites with any audience type
+     * Suitable for display on all websites with any audience type.
      */
     GENERAL_AUDIENCE("g"),
-    
-    /**
-     * Allow images for:
-     * May contain rude gestures, provocatively dressed individuals,
-     * the lesser swear words, or mild violence.
-     */
-	PARENTAL_GUIDANCE_SUGGESTED("pg"),
 
     /**
      * Allow images for:
-     * May contain such things as harsh profanity, intense violence, nudity,
+     * May contain rude gestures, provocatively dressed individuals,
+     * the lesser swear words or mild violence.
+     */
+    PARENTAL_GUIDANCE_SUGGESTED("pg"),
+
+    /**
+     * Allow images for:
+     * May contain such things as harsh profanity, intense violence, nudity
      * or hard drug use.
      */
-	RESTRICTED("r"),
+    RESTRICTED("r"),
 
     /**
      * Allow images for:
      * May contain hardcore sexual imagery or extremely disturbing violence.
      */
-	ADULT_ONLY("x");
+    ADULT_ONLY("x");
 
     private String key;
 

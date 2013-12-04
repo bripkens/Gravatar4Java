@@ -16,11 +16,13 @@
 
 package de.bripkens.gravatar;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Ben Ripkens <bripkens.dev@gmail.com>
@@ -28,13 +30,12 @@ import java.net.URLEncoder;
 public class GravatarTest {
     private static final String EMAIL = "test@example.com";
     private static final String EMAIL_HASH = "55502f40dc8b7c769880b10874abc9d0";
-
     private Gravatar g;
 
     @Before
-	public void setup() {
-		g = new Gravatar();
-	}
+    public void setup() {
+        g = new Gravatar();
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullEmail() {
@@ -44,7 +45,7 @@ public class GravatarTest {
     @Test
     public void testDefaultUrl() {
         assertEquals(Gravatar.URL + EMAIL_HASH +
-                Gravatar.FILE_TYPE_EXTENSION + "?", g.getUrl(EMAIL));
+                Gravatar.FILE_TYPE_EXTENSION, g.getUrl(EMAIL));
     }
 
     @Test
@@ -52,14 +53,14 @@ public class GravatarTest {
         int size = 40;
         g.setSize(size);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?s=" + size + "&", g.getUrl(EMAIL));
+                "?s=" + size, g.getUrl(EMAIL));
     }
 
     @Test
     public void testDefaultSize() {
         g.setSize(Gravatar.DEFAULT_SIZE);
         assertEquals(Gravatar.URL + EMAIL_HASH +
-                Gravatar.FILE_TYPE_EXTENSION + "?", g.getUrl(EMAIL));
+                Gravatar.FILE_TYPE_EXTENSION, g.getUrl(EMAIL));
     }
 
     @Test
@@ -75,7 +76,7 @@ public class GravatarTest {
     @Test
     public void testInvalidSizeTooBig() {
         try {
-            g.setSize(513);
+            g.setSize(2049);
             fail("Size is too big");
         } catch (AssertionError e) {
             // expected is not working for errors
@@ -86,7 +87,7 @@ public class GravatarTest {
     public void testDefaultRating() {
         g.setRating(Gravatar.DEFAULT_RATING);
         assertEquals(Gravatar.URL + EMAIL_HASH +
-                Gravatar.FILE_TYPE_EXTENSION + "?", g.getUrl(EMAIL));
+                Gravatar.FILE_TYPE_EXTENSION, g.getUrl(EMAIL));
     }
 
     @Test
@@ -94,7 +95,7 @@ public class GravatarTest {
         Rating rating = Rating.RESTRICTED;
         g.setRating(rating);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?r=" + rating.getKey() + "&", g.getUrl(EMAIL));
+                "?r=" + rating.getKey(), g.getUrl(EMAIL));
     }
 
     @Test
@@ -111,14 +112,14 @@ public class GravatarTest {
     public void testHTTPSConnection() {
         g.setHttps(true);
         assertEquals(Gravatar.HTTPS_URL + EMAIL_HASH +
-                Gravatar.FILE_TYPE_EXTENSION + "?", g.getUrl(EMAIL));
+                Gravatar.FILE_TYPE_EXTENSION, g.getUrl(EMAIL));
     }
 
     @Test
     public void testForceDefaultImage() {
         g.setForceDefault(true);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?f=y&", g.getUrl(EMAIL));
+                "?f=y", g.getUrl(EMAIL));
     }
 
     @Test
@@ -136,7 +137,7 @@ public class GravatarTest {
         DefaultImage di = DefaultImage.MONSTER;
         g.setStandardDefaultImage(di);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?d=" + di.getKey() + "&", g.getUrl(EMAIL));
+                "?d=" + di.getKey(), g.getUrl(EMAIL));
     }
 
     @Test
@@ -154,7 +155,7 @@ public class GravatarTest {
         String img = "http://www.google.com";
         g.setCustomDefaultImage(img);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?d=" + URLEncoder.encode(img, "UTF-8") + "&", g.getUrl(EMAIL));
+                "?d=" + URLEncoder.encode(img, "UTF-8"), g.getUrl(EMAIL));
     }
 
     @Test
@@ -165,11 +166,11 @@ public class GravatarTest {
         DefaultImage di = DefaultImage.MONSTER;
         g.setStandardDefaultImage(di);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?d=" + di.getKey() + "&", g.getUrl(EMAIL));
+                "?d=" + di.getKey(), g.getUrl(EMAIL));
 
         g.setCustomDefaultImage(img);
         assertEquals(Gravatar.URL + EMAIL_HASH + Gravatar.FILE_TYPE_EXTENSION +
-                "?d=" + URLEncoder.encode(img, "UTF-8") + "&", g.getUrl(EMAIL));
+                "?d=" + URLEncoder.encode(img, "UTF-8"), g.getUrl(EMAIL));
     }
 
     @Test
@@ -191,10 +192,10 @@ public class GravatarTest {
         assertTrue(url.startsWith(Gravatar.HTTPS_URL + EMAIL_HASH +
                 Gravatar.FILE_TYPE_EXTENSION + "?"));
 
-        assertTrue(url.contains("s=" + size));
-        assertTrue(url.contains("r=" + r.getKey()));
-        assertTrue(url.contains("d=" + di.getKey()));
-        assertTrue(url.contains("f=y"));
+        assertTrue(url.contains("s=" + size + "&") || url.endsWith("s=" + size));
+        assertTrue(url.contains("r=" + r.getKey() + "&") || url.endsWith("r=" + r.getKey()));
+        assertTrue(url.contains("d=" + di.getKey() + "&") || url.endsWith("d=" + di.getKey()));
+        assertTrue(url.contains("f=y&") || url.endsWith("f=y"));
 
         assertEquals(url, g.getUrl(EMAIL));
     }

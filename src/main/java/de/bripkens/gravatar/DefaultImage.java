@@ -38,7 +38,7 @@ public enum DefaultImage {
     MYSTERY_MAN("mm"),
 
     /**
-     *  A geometric pattern based on an email hash.
+     * A geometric pattern based on an email hash.
      */
     IDENTICON("identicon"),
 
@@ -48,14 +48,19 @@ public enum DefaultImage {
     MONSTER("monsterid"),
 
     /**
-     * Generated faces with differing features and backgrounds
+     * Generated faces with differing features and backgrounds.
      */
     WAVATAR("wavatar"),
 
     /**
      * Awesome generated, 8-bit arcade-style pixelated faces.
      */
-    RETRO("retro");
+    RETRO("retro"),
+
+    /**
+     * A transparent PNG image.
+     */
+    BLANK("blank");
 
     private final String key;
 
