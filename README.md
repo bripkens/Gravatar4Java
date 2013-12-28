@@ -8,7 +8,7 @@ Gravatar4Java is a Maven project and available in Maven Central. Just add the Gr
     <dependency>
         <groupId>de.bripkens</groupId> 
         <artifactId>gravatar4java</artifactId> 
-        <version>1.1</version> 
+        <version>1.2</version> 
     </dependency>
 
 
