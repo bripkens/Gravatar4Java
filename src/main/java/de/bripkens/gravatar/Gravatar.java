@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Ben Ripkens
+ * Copyright 2011-2014 Ben Ripkens
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,8 @@ import java.net.URLEncoder;
  */
 public class Gravatar {
     public static final String URL = "http://www.gravatar.com/avatar/";
-    public static final String HTTPS_URL = "https://secure.gravatar.com/avatar/";
+    public static final String HTTPS_URL =
+            "https://secure.gravatar.com/avatar/";
     public static final String FILE_TYPE_EXTENSION = ".jpg";
     public static final int DEFAULT_SIZE = 80;
     public static final Rating DEFAULT_RATING = Rating.GENERAL_AUDIENCE;
@@ -177,7 +178,7 @@ public class Gravatar {
      * or when you enforce the default avatar.
      *
      * @param customDefaultImage Absolute URL to an image.
-     * @param encoding           customDefaultImage's (first parameter) encoding
+     * @param encoding customDefaultImage's (first parameter) encoding
      * @return Fluent interface
      * @see java.net.URLEncoder#encode(String, String)
      */
@@ -233,7 +234,8 @@ public class Gravatar {
 
         boolean firstParameter = true;
         // StringBuilder standard capacity is 16 characters while the minimum
-        // url is 63 characters long. The maximum length without customDefaultImage
+        // url is 63 characters long. The maximum length without
+        // customDefaultImage
         // is 91.
         StringBuilder builder = new StringBuilder(91)
                 .append(https ? HTTPS_URL : URL)
@@ -261,7 +263,10 @@ public class Gravatar {
         return builder.toString();
     }
 
-    private void addParameter(StringBuilder builder, String key, String value, Boolean firstParameter) {
+    private void addParameter(StringBuilder builder,
+                              String key,
+                              String value,
+                              boolean firstParameter) {
         if (firstParameter) {
             builder.append("?");
         } else {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Ben Ripkens
+ * Copyright 2011-2014 Ben Ripkens
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -192,10 +192,14 @@ public class GravatarTest {
         assertTrue(url.startsWith(Gravatar.HTTPS_URL + EMAIL_HASH +
                 Gravatar.FILE_TYPE_EXTENSION + "?"));
 
-        assertTrue(url.contains("s=" + size + "&") || url.endsWith("s=" + size));
-        assertTrue(url.contains("r=" + r.getKey() + "&") || url.endsWith("r=" + r.getKey()));
-        assertTrue(url.contains("d=" + di.getKey() + "&") || url.endsWith("d=" + di.getKey()));
-        assertTrue(url.contains("f=y&") || url.endsWith("f=y"));
+        assertTrue(url.contains("s=" + size + "&") ||
+                url.endsWith("s=" + size));
+        assertTrue(url.contains("r=" + r.getKey() + "&") ||
+                url.endsWith("r=" + r.getKey()));
+        assertTrue(url.contains("d=" + di.getKey() + "&") ||
+                url.endsWith("d=" + di.getKey()));
+        assertTrue(url.contains("f=y&") ||
+                url.endsWith("f=y"));
 
         assertEquals(url, g.getUrl(EMAIL));
     }
